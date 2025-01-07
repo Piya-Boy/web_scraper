@@ -44,7 +44,10 @@ class NewsScraper:
         response = requests.get(self.config.FLASK_SERVER_URL)
         if response.status_code == 200:
             articles = response.json()
-            self.processed_titles = {article['Title'] for article in articles}
+            if isinstance(articles, list):
+                self.processed_titles = {article['Title'] for article in articles}
+            else:
+                logging.error("Unexpected data format: articles is not a list.")
         else:
             logging.error(f"Error fetching initial data from Flask server: {response.status_code}")
 
@@ -187,4 +190,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main())v
