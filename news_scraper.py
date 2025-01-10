@@ -186,7 +186,7 @@ class NewsScraper:
 async def main():
     config = NewsScraperConfig()
     scraper = NewsScraper(config)
-    await scraper.run("https://www.bleepingcomputer.com/news/security", max_pages=724)
+    await scraper.run("https://www.bleepingcomputer.com/news/security", max_pages=2)
 
 
 if __name__ == "__main__":
