@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 import requests
 import logging
+import json
 from bs4 import BeautifulSoup
 from transformers import pipeline
 
@@ -14,6 +15,7 @@ logging.basicConfig(
 class NewsScraperConfig:
     BATCH_SIZE = 5
     TIMEOUT = 30
+    SOURCE = 'https://www.bleepingcomputer.com/news/security'
     # FLASK_SERVER_URL = 'http://localhost:5000/data'
     FLASK_SERVER_URL = 'https://piyamianglae.pythonanywhere.com/data'
 
@@ -22,6 +24,9 @@ class NewsScraperConfig:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
         self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+        # with open('../attack_types.json', 'r') as f:
+        #     self.attack_types = json.load(f)
 
         self.attack_types = {
             'ransomware': ['ransomware', 'ransom', 'encryption attack', 'decrypt key'],
@@ -105,7 +110,7 @@ class NewsScraper:
             title = soup.find('h1').text.strip() if soup.find('h1') else ""
             if title in self.processed_titles:
                 return None
-
+            print(title)
             date = soup.find('li', class_='cz-news-date').text.strip() if soup.find('li', class_='cz-news-date') else ""
             content = ' '.join([p.text for p in soup.select('div.articleBody p')])
 
@@ -122,7 +127,8 @@ class NewsScraper:
                 'Title': title,
                 'Date': date,
                 'Category': category,
-                'Summary': summary
+                'Summary': summary,
+                'Source': self.config.SOURCE,
             }
 
         except Exception as e:
@@ -133,7 +139,9 @@ class NewsScraper:
         if not articles:
             return
         for article in articles:
+            print(article)
             if article and article['Title'] not in self.processed_titles:
+                # pass
                 response = requests.post(self.config.FLASK_SERVER_URL, json=article)
                 if response.status_code == 201:
                     self.processed_titles.add(article['Title'])
@@ -186,7 +194,7 @@ class NewsScraper:
 async def main():
     config = NewsScraperConfig()
     scraper = NewsScraper(config)
-    await scraper.run("https://www.bleepingcomputer.com/news/security", max_pages=2)
+    await scraper.run(config.SOURCE, max_pages=2)
 
 
 if __name__ == "__main__":
