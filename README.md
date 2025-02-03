@@ -1,20 +1,21 @@
 
-# Cybersecurity News Scraper
+# Cybersecurity News Scraper & Security News Analysis Dashboard
 
 ## Overview
+**Security News Analysis Dashboard**: A Streamlit-based dashboard for analyzing and visualizing cybersecurity news articles. It fetches data from the Flask API and provides interactive insights into trends and distributions of cybersecurity threats.
 
-This project consists of web scrapers designed to collect and process articles from various cybersecurity news sources. The scrapers use natural language processing (NLP) techniques to classify and summarize the content of the articles. The collected data is then sent to a Flask server for storage and further analysis.
+---
 
-### Key Technologies Used
+## Key Technologies Used
+### Security News Analysis Dashboard
+- **Streamlit**: For building the interactive web dashboard.
+- **Pandas**: For data manipulation and analysis.
+- **Plotly**: For creating interactive visualizations.
+- **NLTK**: For natural language processing tasks (e.g., tokenization, stopwords).
+- **Requests**: For fetching data from the API.
+- **Datetime**: For handling date and time operations.
 
-- **Python**: The main programming language used for developing the scrapers.
-- **aiohttp**: For asynchronous HTTP requests.
-- **requests**: For making HTTP requests.
-- **BeautifulSoup**: For parsing HTML content.
-- **transformers**: For NLP tasks, specifically for summarization using pre-trained models.
-- **torch**: For running the NLP models.
-- **Flask**: The backend server where the collected data is stored.
-- **Logging**: For tracking the activities and errors during the scraping process.
+---
 
 ## Installation
 
@@ -23,13 +24,11 @@ To set up and run this project, follow the steps below:
 1. **Clone the Repository**
 
    ```sh
-   git clone https://github.com/Piya-Boy/web_scraper.git
-   cd your-repo-name
+   git clone https://github.com/Piya-Boy/Security-News-Analysis-Dashboard.git
+   cd web app
    ```
 
 2. **Create a Virtual Environment**
-
-   It's recommended to use a virtual environment to manage dependencies.
 
    - **Windows**:
      ```sh
@@ -45,54 +44,55 @@ To set up and run this project, follow the steps below:
 
 3. **Install Dependencies**
 
-   Install the required packages using `pip` and the `requirements.txt` file.
-
    ```sh
    pip install -r requirements.txt
    ```
 
-4. **Prepare Configuration**
 
-   Ensure that you have an `attack_types.json` file in the root directory. This file contains the keywords for classifying the content.
-
-   Example content of `attack_types.json`:
-   ```json
-
-
-   {
-       "ransomware": ["ransomware", "ransom", "encryption attack", "decrypt key"],
-       "malware": ["malware", "virus", "trojan", "worm"],
-       "phishing": ["phishing", "spear phishing", "social engineering"],
-       "data breach": ["data breach", "leak", "exposed data"],
-       "ddos": ["ddos", "denial of service", "traffic flood"],
-       "vulnerability": ["vulnerability", "exploit", "zero-day", "security flaw"]
-   }
-   ```
+---
 
 ## Usage
-
-1. **Run the Scrapers**
-
-   To start the scraping process, run the `main.py` script. This script initializes and runs all the scrapers sequentially.
-
+### Security News Analysis Dashboard
+1. **Run the Dashboard**
    ```sh
-   python main.py
+   streamlit run app.py
    ```
 
-   The `main.py` script will output the status of each scraper, indicating which source is currently being processed and whether the process is successful or if any errors occurred.
+2. **Filters**:
+   - Use the sidebar to filter data by **Month**, **Year**, and **Attack Type**.
+   - The dashboard dynamically updates based on the selected filters.
 
-2. **Check the Logs**
+3. **Visualizations**:
+   - **Attack Types Trend**: Shows the trend of attack types over time.
+   - **Attack Types Distribution**: Displays the distribution of attack types.
+   - **Yearly Attacks**: Visualizes the number of attacks per year.
 
-   The logs are saved in `scraper.log` for tracking the activities and any errors that occur during the scraping process.
+4. **Download Data**:
+   - Use the sidebar to download the dataset in CSV, JSON, or Excel format.
 
-3. **Access the Collected Data**
+---
 
-   The collected data is sent to a Flask server specified in the configuration. You can access and analyze the data from there.
+## API Integration
+
+The dashboard fetches data from an API hosted at `https://piyamianglae.pythonanywhere.com/data`. Ensure the API is accessible and returns data in the expected format.
+
+---
 
 ## Contributing
 
 If you would like to contribute to this project, please fork the repository and submit a pull request with your changes. Make sure to follow the coding standards and include appropriate tests.
 
+---
+
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+## Screenshots
+
+![Dashboard Screenshot](https://img5.pic.in.th/file/secure-sv1/logos02edf0d066b19226.png)  
+*Example of the Security News Analysis Dashboard.*
+
+---
